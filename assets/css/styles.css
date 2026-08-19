@@ -1,0 +1,735 @@
+/* ==========================================================================
+   ODONTO VIP — direção de arte
+   --------------------------------------------------------------------------
+   Impronta própria, não herdada de template:
+   · serifa editorial (Newsreader) com itálico como acento — o oposto do
+     sans-geométrico-em-tudo que deixa a página com cara de gerada
+   · grão fino sobre toda a página, para tirar o "liso digital"
+   · fotos em arco (topo semicircular), não em retângulo arredondado
+   · fios de ouro (hairlines) em vez de bordas duras
+   · numeração de seção 01…05, rótulos verticais, citação em corpo grande
+   · ícones de traço fino em anel de ouro, sem caixa preenchida repetida
+   Matizes amostrados da marca: azul do dente #1880BF, dourado da coroa #BC943D.
+   ========================================================================== */
+
+:root{
+  color-scheme: light;
+
+  /* ---- base ---- */
+  --paper:#FBFAF7;          /* branco quente, não clínico */
+  --paper-2:#F4F1EA;
+  --surface:#FFFFFF;
+  --bg:#F6F8FC;
+  --ink:#0B1F3F;
+  --ink-soft:#40536F;
+  --ink-faint:#7C8CA3;
+  --rule:#E3E0D6;
+  --rule-cool:#DCE6F2;
+
+  /* ---- marca ---- */
+  --navy:#08203F;
+  --navy-2:#0B2A52;
+  --navy-3:#123A6B;
+  --brand:#1880BF;
+  --brand-deep:#0A5C96;
+  --brand-bright:#3AA7DE;
+  --cyan:#30E3E5;
+  --gold:#BC943D;
+  --gold-mid:#CFA755;
+  --gold-light:#E8CE86;
+  --wa:#25D366;
+  --wa-deep:#1EA855;
+
+  --grad-brand:linear-gradient(135deg,#0A5C96 0%,#1880BF 60%,#3AA7DE 100%);
+  --grad-gold:linear-gradient(135deg,#A87F2C 0%,#CFA755 45%,#E8CE86 100%);
+  --grad-navy:linear-gradient(158deg,#08203F 0%,#0B2A52 48%,#123A6B 100%);
+  --hair-gold:linear-gradient(90deg,transparent,rgba(188,148,61,.55) 18%,rgba(232,206,134,.9) 50%,rgba(188,148,61,.55) 82%,transparent);
+  --hair-cool:linear-gradient(90deg,transparent,rgba(24,128,191,.35) 20%,rgba(48,227,229,.5) 50%,rgba(24,128,191,.35) 80%,transparent);
+
+  /* ---- sombras: difusas e baixas, como luz de ambiente ---- */
+  --sh-xs:0 1px 2px rgba(11,31,63,.04);
+  --sh:0 2px 4px -2px rgba(11,31,63,.06),0 12px 28px -16px rgba(11,31,63,.16);
+  --sh-md:0 4px 10px -4px rgba(11,31,63,.08),0 22px 50px -20px rgba(11,31,63,.22);
+  --sh-lg:0 10px 20px -10px rgba(11,31,63,.12),0 44px 90px -30px rgba(11,31,63,.32);
+  --sh-gold:0 12px 30px -12px rgba(188,148,61,.45);
+  --sh-wa:0 12px 28px -12px rgba(37,211,102,.5);
+  --ring:0 0 0 3px rgba(24,128,191,.18);
+
+  /* ---- forma ---- */
+  --r-sm:6px;
+  --r:12px;
+  --r-lg:18px;
+  --r-xl:26px;
+  --pill:999px;
+  --arch:50% 50% 20px 20px / 40% 40% 20px 20px;
+
+  /* ---- tipografia ---- */
+  --display:"Newsreader","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --body:"Karla","Avenir Next","Segoe UI",system-ui,sans-serif;
+
+  --ease:cubic-bezier(.22,1,.36,1);
+  --t-fast:.2s;
+  --t:.4s;
+  --t-slow:.7s;
+
+  --head-h:78px;
+  --maxw:1200px;
+}
+
+/* ============================== reset ============================== */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth; scroll-padding-top:calc(var(--head-h) + 20px); -webkit-text-size-adjust:100%}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--body); font-size:16px; line-height:1.7; font-weight:400;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+/* grão fino sobre tudo — tira o aspecto liso de render */
+body::after{
+  content:""; position:fixed; inset:0; z-index:3; pointer-events:none; opacity:.05;
+  mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.86' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+img{max-width:100%; display:block; height:auto}
+a{color:var(--brand-deep); text-decoration:none; transition:color var(--t-fast)}
+a:hover{color:var(--brand)}
+h1,h2,h3,h4{margin:0; font-family:var(--display); font-weight:500; line-height:1.1; letter-spacing:-.015em; color:var(--ink)}
+p{margin:0}
+ul{margin:0; padding:0; list-style:none}
+button{font-family:inherit}
+:focus-visible{outline:none; box-shadow:var(--ring); border-radius:var(--r-sm)}
+::selection{background:rgba(24,128,191,.18)}
+
+.wrap{width:100%; max-width:var(--maxw); margin:0 auto; padding:0 28px; position:relative; z-index:1}
+.section{padding:110px 0; position:relative; z-index:1}
+.section-paper{background:var(--paper-2)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ============================== átomos ============================== */
+
+/* rótulo pequeno em caixa alta, com fio de ouro à esquerda */
+.label{
+  display:inline-flex; align-items:center; gap:11px;
+  font-size:11px; font-weight:600; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--gold); margin-bottom:22px;
+}
+.label::before{content:""; width:34px; height:1px; background:var(--grad-gold); flex:none}
+.label.on-dark{color:var(--gold-light)}
+.label.on-dark::before{background:linear-gradient(90deg,rgba(232,206,134,.9),rgba(232,206,134,.25))}
+
+/* numeração editorial de seção */
+.sec-no{
+  display:block; font-family:var(--display); font-style:italic; font-weight:400;
+  font-size:15px; letter-spacing:.06em; color:var(--gold); margin-bottom:10px;
+}
+
+/* rótulo vertical */
+.vlabel{
+  position:absolute; left:-14px; top:50%;
+  transform:rotate(180deg) translateY(50%); writing-mode:vertical-rl;
+  font-size:10px; font-weight:600; letter-spacing:.34em; text-transform:uppercase;
+  color:rgba(232,206,134,.5); pointer-events:none; user-select:none;
+}
+
+.h-xl{font-size:clamp(40px,6.2vw,74px); line-height:1.03; letter-spacing:-.028em}
+.h-lg{font-size:clamp(30px,4.4vw,50px); line-height:1.07; letter-spacing:-.022em}
+.h-md{font-size:clamp(24px,3vw,34px); line-height:1.14}
+
+/* acentos: itálico serifado + ouro — o gesto que dá autoria à página */
+.acc{font-style:italic; font-weight:400;
+  background:var(--grad-gold); -webkit-background-clip:text; background-clip:text; color:transparent}
+.acc-cool{font-style:italic; font-weight:400;
+  background:linear-gradient(120deg,#3AA7DE,#30E3E5); -webkit-background-clip:text; background-clip:text; color:transparent}
+
+.lead{font-size:17px; color:var(--ink-soft); line-height:1.72; max-width:56ch}
+.lead-sm{font-size:15px; color:var(--ink-soft); line-height:1.7}
+
+/* fios */
+.hair{height:1px; background:var(--hair-gold); border:0; margin:0}
+.hair-cool{height:1px; background:var(--hair-cool); border:0; margin:0}
+
+.sec-head{max-width:640px; margin-bottom:64px}
+.sec-head.center{margin-inline:auto; text-align:center}
+.sec-head.center .label{justify-content:center}
+.sec-head .lead{margin-top:20px}
+
+/* ---- botões ---- */
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:10px;
+  font-family:var(--body); font-weight:600; font-size:15px; line-height:1;
+  padding:15px 28px; border-radius:var(--pill); border:0; cursor:pointer;
+  white-space:nowrap; text-decoration:none; position:relative;
+  transition:transform var(--t) var(--ease), box-shadow var(--t) var(--ease),
+             background var(--t-fast), color var(--t-fast), border-color var(--t-fast);
+}
+/* line-height:1 no botão + display:block no ícone = ícone e texto sempre
+   centrados entre si (era a causa do desalinhamento no "Agendar") */
+.btn svg{width:1.15em; height:1.15em; flex:none; display:block}
+.btn-wa{background:linear-gradient(135deg,var(--wa-deep),var(--wa)); color:#fff; box-shadow:var(--sh-wa)}
+.btn-wa:hover{transform:translateY(-2px); box-shadow:0 18px 38px -12px rgba(37,211,102,.6); color:#fff}
+.btn-ink{background:var(--navy); color:#fff; box-shadow:var(--sh)}
+.btn-ink:hover{transform:translateY(-2px); background:var(--navy-2); color:#fff; box-shadow:var(--sh-md)}
+.btn-gold{background:var(--grad-gold); color:#2A2008; box-shadow:var(--sh-gold)}
+.btn-gold:hover{transform:translateY(-2px); color:#2A2008; box-shadow:0 18px 40px -12px rgba(188,148,61,.55)}
+.btn-line{background:transparent; color:var(--ink); border:1px solid var(--rule-cool)}
+.btn-line:hover{border-color:var(--brand); color:var(--brand-deep); transform:translateY(-2px)}
+.btn-glass{background:rgba(255,255,255,.08); color:#fff; border:1px solid rgba(232,206,134,.34); backdrop-filter:blur(12px)}
+.btn-glass:hover{background:rgba(255,255,255,.14); border-color:var(--gold-light); color:#fff; transform:translateY(-2px)}
+.btn-block{width:100%}
+.btn-sm{padding:11px 20px; font-size:13.5px}
+.btn-lg{padding:17px 34px; font-size:16px}
+
+/* seta que avança no hover */
+.btn .go{transition:transform var(--t) var(--ease)}
+.btn:hover .go{transform:translateX(4px)}
+
+/* ---- seletor de unidade ----
+   Feito com <details>/<summary>: abre e fecha nativamente, é acessível por
+   teclado e os links continuam sendo <a href> de verdade — funciona mesmo se o
+   JS falhar. O JS só cuida de fechar ao clicar fora e no Esc. */
+.picker{position:relative; display:inline-block}
+.picker.block{display:block}
+.picker > summary{
+  list-style:none; cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.picker > summary::-webkit-details-marker{display:none}
+.picker > summary::marker{content:""}
+.picker.block > summary{width:100%}
+.picker .caret{width:.8em; height:.8em; opacity:.75; transition:transform var(--t) var(--ease)}
+.picker[open] .caret{transform:rotate(180deg)}
+
+.picker-menu{
+  position:absolute; z-index:70; top:calc(100% + 12px); left:50%; transform:translateX(-50%);
+  min-width:268px; padding:9px; border-radius:var(--r-lg); text-align:left;
+  background:var(--surface); box-shadow:var(--sh-md), inset 0 0 0 1px rgba(188,148,61,.30);
+  animation:pop .18s var(--ease);
+}
+@keyframes pop{from{opacity:0; transform:translateX(-50%) translateY(-6px)}}
+.picker.to-right .picker-menu{left:auto; right:0; transform:none; animation:pop-r .18s var(--ease)}
+@keyframes pop-r{from{opacity:0; transform:translateY(-6px)}}
+.picker.to-up .picker-menu{top:auto; bottom:calc(100% + 12px)}
+/* enquanto um seletor está aberto, a seção dele sobe acima das seguintes: todas
+   as seções têm z-index 1, e a de baixo no DOM pintava por cima do menu */
+.section.picker-open,.cta.picker-open,.hero.picker-open,.site-footer.picker-open{z-index:45}
+/* o cartão também sobe: enquanto os cartões de baixo fazem o fade-in eles têm
+   opacity < 1, o que cria contexto de empilhamento e cobria o menu por ~0,7s */
+.svc.picker-open{z-index:46}
+.wa-dock .picker-menu{min-width:250px}
+@media (max-width:340px){ .wa-dock .picker-menu{min-width:0; width:calc(100vw - 40px)} }
+/* seta ligando o menu ao botão */
+.picker-menu::before{
+  content:""; position:absolute; top:-6px; left:50%; margin-left:-6px;
+  width:12px; height:12px; background:var(--surface); transform:rotate(45deg);
+  box-shadow:-1px -1px 0 0 rgba(188,148,61,.30);
+}
+.picker.to-right .picker-menu::before{left:auto; right:26px; margin-left:0}
+.picker.to-up .picker-menu::before{
+  top:auto; bottom:-6px; box-shadow:1px 1px 0 0 rgba(188,148,61,.30);
+}
+.picker-head{
+  display:block; padding:9px 12px 11px;
+  font-size:10.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--gold);
+}
+.picker-menu a{
+  display:flex; align-items:center; gap:13px; padding:11px 12px;
+  border-radius:var(--r); color:var(--ink); transition:background var(--t-fast);
+}
+.picker-menu a:hover,.picker-menu a:focus-visible{background:var(--paper-2); color:var(--ink)}
+.picker-menu a + a{margin-top:2px}
+.pm-ico{
+  width:36px; height:36px; border-radius:50%; flex:none;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(37,211,102,.12); color:var(--wa-deep);
+}
+.pm-ico svg{width:18px; height:18px; display:block}
+.pm-txt b{display:block; font-family:var(--display); font-weight:500; font-size:16.5px; line-height:1.2}
+.pm-txt span{font-size:12.5px; color:var(--ink-faint)}
+
+/* gatilho no estilo de link, usado nos cartões de serviço em destaque */
+.picker > summary.go-link{
+  display:inline-flex; align-items:center; gap:9px;
+  font-size:13.5px; font-weight:600; color:var(--gold-light); letter-spacing:.02em;
+}
+.picker > summary.go-link svg{width:15px; height:15px; display:block}
+.svc.feat .picker{position:relative; margin-top:auto}
+
+/* ---- ícone em anel de ouro (substitui a caixa preenchida repetida) ---- */
+.ring-ico{
+  width:52px; height:52px; border-radius:50%; flex:none;
+  display:inline-flex; align-items:center; justify-content:center;
+  color:var(--brand-deep); background:var(--surface);
+  box-shadow:inset 0 0 0 1px rgba(188,148,61,.34), var(--sh-xs);
+  transition:color var(--t), box-shadow var(--t), background var(--t), transform var(--t) var(--ease);
+}
+.ring-ico svg{width:23px; height:23px}
+.ring-ico.sm{width:40px; height:40px}
+.ring-ico.sm svg{width:18px; height:18px}
+.ring-ico.solid{background:var(--grad-brand); color:#fff; box-shadow:var(--sh)}
+.ring-ico.gold{background:var(--grad-gold); color:#2A2008; box-shadow:var(--sh-gold)}
+
+.reveal{opacity:0; transform:translateY(20px); transition:opacity var(--t-slow) var(--ease), transform var(--t-slow) var(--ease)}
+.reveal.in{opacity:1; transform:none}
+
+/* ============================== header ============================== */
+.site-header{
+  position:sticky; top:0; z-index:50; height:var(--head-h); display:flex; align-items:center;
+  background:rgba(251,250,247,.86); backdrop-filter:blur(18px) saturate(1.3);
+  transition:box-shadow var(--t), background var(--t);
+}
+.site-header::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:1px;
+  background:var(--hair-gold); opacity:0; transition:opacity var(--t);
+}
+.site-header.scrolled{background:rgba(251,250,247,.95); box-shadow:0 1px 24px -12px rgba(11,31,63,.22)}
+.site-header.scrolled::after{opacity:1}
+.head-inner{display:flex; align-items:center; gap:30px; width:100%; max-width:var(--maxw); margin:0 auto; padding:0 28px}
+
+/* lockup: selo circular dourado + lettering da marca */
+.brand{display:inline-flex; align-items:center; gap:13px; margin-right:auto; flex:none}
+.brand .selo{width:44px; height:44px; flex:none; filter:drop-shadow(0 3px 8px rgba(11,31,63,.18))}
+.brand .lettering{height:23px; width:auto; flex:none}
+.brand:hover .selo{transform:rotate(-6deg)}
+.brand .selo{transition:transform var(--t) var(--ease)}
+
+.nav{display:flex; align-items:center; gap:32px}
+.nav > a{flex:none}
+/* :not(.btn) é essencial — `.nav > a` tem especificidade maior que `.btn`, e sem
+   isso sobrescrevia o padding e o font-size do botão "Agendar", que ficava sem
+   respiro lateral e com o ícone desencontrado do texto */
+.nav > a:not(.btn){position:relative; font-size:14.5px; font-weight:500; color:var(--ink-soft); padding:7px 0}
+.nav > a:not(.btn)::after{
+  content:""; position:absolute; left:0; right:100%; bottom:0; height:1px;
+  background:var(--grad-gold); transition:right var(--t) var(--ease);
+}
+.nav > a:not(.btn):hover,.nav > a:not(.btn).active{color:var(--ink)}
+.nav > a:not(.btn):hover::after,.nav > a:not(.btn).active::after{right:0}
+.nav-toggle{
+  display:none; width:44px; height:44px; border-radius:50%; cursor:pointer;
+  border:1px solid var(--rule); background:var(--surface); color:var(--ink);
+  align-items:center; justify-content:center;
+}
+.nav-toggle svg{width:19px; height:19px; display:block}
+
+/* camada de adornos: é ELA que recorta os enfeites, para que a própria seção
+   possa ficar com overflow visível e os menus de unidade não sejam cortados */
+.deco{position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0; border-radius:inherit}
+
+/* ============================== hero ============================== */
+.hero{position:relative; color:#EDF4FB; background:var(--grad-navy); padding:118px 0 128px}
+.hero::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(680px 500px at 84% 6%, rgba(48,227,229,.20), transparent 64%),
+    radial-gradient(760px 560px at 4% 94%, rgba(24,128,191,.26), transparent 62%),
+    radial-gradient(520px 380px at 62% 52%, rgba(188,148,61,.12), transparent 66%);
+}
+/* forma orgânica ao fundo, não um círculo perfeito */
+.hero .deco .blob{
+  position:absolute; width:660px; height:660px; right:-140px; top:-160px; pointer-events:none;
+  background:radial-gradient(circle at 40% 40%, rgba(48,227,229,.13), transparent 62%);
+  border-radius:44% 56% 62% 38% / 52% 44% 56% 48%;
+  animation:morph 26s ease-in-out infinite;
+}
+@keyframes morph{
+  0%,100%{border-radius:44% 56% 62% 38% / 52% 44% 56% 48%; transform:rotate(0)}
+  50%    {border-radius:58% 42% 38% 62% / 44% 58% 42% 56%; transform:rotate(8deg)}
+}
+.hero-grid{position:relative; z-index:2; display:grid; gap:72px; align-items:center;
+  grid-template-columns:minmax(0,1.02fr) minmax(0,.98fr)}
+.hero h1{color:#fff}
+.hero h1 .line{display:block}
+.hero .sub{margin-top:26px; font-size:17.5px; line-height:1.7; color:rgba(237,244,251,.80); max-width:44ch}
+.hero-cta{display:flex; flex-wrap:wrap; gap:14px; margin-top:38px}
+.hero-marks{display:flex; flex-wrap:wrap; gap:26px; margin-top:44px; padding-top:28px;
+  border-top:1px solid rgba(232,206,134,.20)}
+.mark{display:inline-flex; align-items:center; gap:9px; font-size:13.5px; color:rgba(237,244,251,.84)}
+.mark svg{width:15px; height:15px; color:var(--gold-light); flex:none; display:block}
+
+/* retrato em arco, com fio de ouro e selo — não um círculo genérico */
+.portrait-wrap{position:relative; justify-self:center; width:min(100%,392px); margin:18px 0}
+.portrait{
+  position:relative; aspect-ratio:4/5; border-radius:var(--arch); overflow:hidden;
+  box-shadow:var(--sh-lg), 0 0 0 1px rgba(232,206,134,.30);
+  /* passe-partout: o outline segue o border-radius da própria foto e o offset
+     aumenta os raios de forma concêntrica — por isso encaixa sempre. Um ::before
+     com raio em % não encaixa: a % resolve contra o tamanho de cada elemento. */
+  outline:1px solid rgba(232,206,134,.30);
+  outline-offset:17px;
+}
+.portrait img{width:100%; height:100%; object-fit:cover; object-position:center 8%}
+.portrait::after{
+  content:""; position:absolute; inset:0; pointer-events:none; border-radius:inherit;
+  background:linear-gradient(to top, rgba(8,32,63,.55) 0%, rgba(8,32,63,.06) 38%, transparent 62%);
+}
+.name-tag{
+  position:absolute; z-index:2; left:50%; bottom:20px; transform:translateX(-50%);
+  display:inline-flex; align-items:center; gap:11px; white-space:nowrap;
+  background:rgba(8,32,63,.62); border:1px solid rgba(232,206,134,.34);
+  backdrop-filter:blur(14px); border-radius:var(--pill); padding:11px 20px;
+  box-shadow:0 18px 36px -16px rgba(0,0,0,.6);
+}
+.name-tag .selo-mini{width:30px; height:30px; flex:none}
+.name-tag b{display:block; font-family:var(--display); font-weight:500; font-size:15px; color:#fff; line-height:1.15}
+.name-tag span{font-size:11.5px; color:rgba(237,244,251,.68); letter-spacing:.04em}
+
+.float-note{
+  position:absolute; z-index:2; right:-26px; top:52px;
+  display:flex; align-items:center; gap:11px; max-width:210px;
+  background:rgba(255,255,255,.09); border:1px solid rgba(255,255,255,.18);
+  backdrop-filter:blur(14px); border-radius:var(--r); padding:13px 16px;
+  box-shadow:0 20px 44px -20px rgba(0,0,0,.55);
+  animation:bob 7s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-11px)}}
+.float-note svg{width:17px; height:17px; color:var(--cyan); flex:none; display:block}
+.float-note b{display:block; font-family:var(--display); font-weight:500; font-size:14.5px; color:#fff; line-height:1.2}
+.float-note span{font-size:11.5px; color:rgba(237,244,251,.68); line-height:1.4}
+
+/* ============================== faixa de números ============================== */
+.figures{background:var(--navy); position:relative; z-index:2}
+.figures-inner{
+  display:grid; grid-template-columns:repeat(4,1fr);
+  padding:44px 0; gap:34px;
+}
+.fig{position:relative; text-align:center; padding:0 18px}
+.fig + .fig::before{
+  content:""; position:absolute; left:0; top:8%; bottom:8%; width:1px;
+  background:linear-gradient(to bottom,transparent,rgba(232,206,134,.34),transparent);
+}
+.fig b{
+  display:block; font-family:var(--display); font-weight:400; font-size:clamp(30px,3.6vw,44px);
+  line-height:1; color:var(--gold-light); letter-spacing:-.02em;
+}
+.fig span{display:block; margin-top:11px; font-size:12.5px; color:rgba(237,244,251,.62); letter-spacing:.03em}
+
+/* ============================== unidades ============================== */
+.units{display:grid; grid-template-columns:repeat(auto-fit,minmax(304px,1fr)); gap:30px}
+.unit{
+  display:flex; flex-direction:column; background:var(--surface);
+  border-radius:var(--r-lg); overflow:hidden; box-shadow:var(--sh);
+  transition:transform var(--t) var(--ease), box-shadow var(--t) var(--ease);
+}
+.unit:hover{transform:translateY(-6px); box-shadow:var(--sh-md)}
+
+/* placa de mapa vetorial — arte própria, não um link de texto solto */
+.map-plate{
+  position:relative; display:block; aspect-ratio:20/9; overflow:hidden;
+  background:linear-gradient(165deg,#0B2A52,#08203F);
+  border-bottom:1px solid rgba(188,148,61,.28);
+}
+.map-plate .art{position:absolute; inset:0; width:100%; height:100%}
+.map-plate .pin{
+  position:absolute; left:50%; top:46%; transform:translate(-50%,-100%);
+  width:34px; height:34px; color:var(--gold-light);
+  filter:drop-shadow(0 6px 12px rgba(0,0,0,.55));
+}
+.map-plate .pin svg{width:100%; height:100%; display:block}
+.map-plate .pin::after{
+  content:""; position:absolute; left:50%; bottom:-9px; transform:translateX(-50%);
+  width:24px; height:8px; border-radius:50%; background:rgba(232,206,134,.30);
+  animation:ping 2.6s ease-out infinite;
+}
+@keyframes ping{0%{transform:translateX(-50%) scale(.5); opacity:.9}100%{transform:translateX(-50%) scale(2.2); opacity:0}}
+.map-plate .open{
+  position:absolute; right:13px; bottom:12px;
+  display:inline-flex; align-items:center; gap:7px;
+  font-size:11.5px; font-weight:600; letter-spacing:.03em; color:#0B1F3F;
+  background:rgba(232,206,134,.94); border-radius:var(--pill); padding:7px 14px;
+  box-shadow:0 8px 18px -8px rgba(0,0,0,.5);
+  transition:transform var(--t) var(--ease), background var(--t-fast);
+}
+.map-plate .open svg{width:13px; height:13px; display:block}
+.map-plate:hover .open{transform:translateX(3px); background:#F0DCA4}
+.map-plate .district{
+  position:absolute; left:15px; bottom:14px;
+  font-family:var(--display); font-style:italic; font-size:14px; color:rgba(237,244,251,.72);
+}
+
+.unit-body{padding:26px 28px 22px; flex:1}
+.unit-body h3{font-size:22px; margin-bottom:9px}
+.tag{
+  display:inline-flex; align-items:center; gap:7px; font-size:10.5px; font-weight:600;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--brand-deep);
+}
+.tag::before{content:""; width:6px; height:6px; border-radius:50%; background:var(--cyan); flex:none}
+.tag.soon{color:var(--gold)}
+.tag.soon::before{background:var(--gold-mid)}
+.unit address{font-style:normal; margin-top:16px; font-size:14.5px; line-height:1.75; color:var(--ink-soft)}
+.unit address strong{display:block; color:var(--ink); font-weight:600}
+.unit-hours{
+  display:flex; gap:11px; margin-top:20px; padding-top:17px;
+  border-top:1px solid var(--rule); font-size:13.5px; color:var(--ink-soft);
+}
+.unit-hours svg{width:16px; height:16px; color:var(--gold); flex:none; margin-top:4px; display:block}
+.unit-foot{padding:0 28px 28px}
+.unit.is-soon{background:var(--paper-2); box-shadow:none; outline:1px dashed var(--rule); outline-offset:-1px}
+.unit.is-soon .map-plate{background:linear-gradient(165deg,#2C2413,#1A1509)}
+.unit.is-soon:hover{transform:none}
+
+/* ============================== serviços (grade editorial) ============================== */
+.services{display:grid; grid-template-columns:repeat(6,1fr); gap:22px}
+.svc{
+  grid-column:span 2; display:flex; flex-direction:column; gap:15px;
+  padding:30px 26px; background:var(--surface); border-radius:var(--r-lg);
+  box-shadow:var(--sh-xs); transition:transform var(--t) var(--ease), box-shadow var(--t) var(--ease);
+}
+.svc:hover{transform:translateY(-5px); box-shadow:var(--sh)}
+.svc:hover .ring-ico{color:#fff; background:var(--grad-brand); box-shadow:var(--sh); transform:rotate(-5deg)}
+.svc h3{font-size:19px; line-height:1.22}
+.svc p{font-size:14px; color:var(--ink-faint); line-height:1.65}
+/* ritmo da grade: 3+3 (destaque) · 2+2+2 · 2+2+2 · 3+3 — todas as linhas
+   fecham cheias, sem o buraco final típico de grade automática */
+.svc.wide{grid-column:span 3}
+.svc.wide h3{font-size:21px}
+.svc.wide p{font-size:14.5px}
+
+/* duas portas de entrada em destaque: ocupam 3 colunas e ganham fundo escuro */
+.svc.feat{
+  grid-column:span 3; background:var(--grad-navy); color:#EDF4FB;
+  box-shadow:var(--sh-md); position:relative; padding:36px 32px;
+}
+/* o brilho é um gradiente ancorado no canto, com inset:0 — antes era um círculo
+   deslocado que só ficava contido por overflow:hidden, e o overflow cortava o
+   menu de unidade que abre a partir do cartão */
+.svc.feat::before{
+  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  background:radial-gradient(240px 240px at 100% 0%, rgba(188,148,61,.22), transparent 68%);
+}
+.svc.feat h3{color:#fff; font-size:26px; position:relative}
+.svc.feat p{color:rgba(237,244,251,.74); font-size:15px; position:relative}
+.svc.feat .ring-ico{background:rgba(232,206,134,.14); color:var(--gold-light);
+  box-shadow:inset 0 0 0 1px rgba(232,206,134,.36); position:relative}
+.svc.feat:hover .ring-ico{background:var(--grad-gold); color:#2A2008}
+.svc.feat .go-link{
+  position:relative; margin-top:auto; display:inline-flex; align-items:center; gap:9px;
+  font-size:13.5px; font-weight:600; color:var(--gold-light); letter-spacing:.02em;
+}
+.svc.feat .go-link svg{width:15px; height:15px; display:block; transition:transform var(--t) var(--ease)}
+.svc.feat:hover .go-link svg{transform:translateX(4px)}
+
+/* ============================== equipe ============================== */
+.team{display:grid; grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr); gap:78px; align-items:center}
+.team-media{position:relative; margin:20px 0; justify-self:center; width:min(100%,430px)}
+.team-media .shot{
+  aspect-ratio:4/5; width:100%; object-fit:cover; border-radius:var(--arch);
+  box-shadow:var(--sh-lg), 0 0 0 1px rgba(188,148,61,.24);
+  outline:1px solid rgba(188,148,61,.28);
+  outline-offset:19px;
+}
+.team-media .selo{
+  position:absolute; z-index:2; bottom:-26px; left:-26px; width:118px; height:118px;
+  filter:drop-shadow(0 16px 30px rgba(11,31,63,.34)); animation:bob 8s ease-in-out infinite;
+}
+.team-caption{
+  position:absolute; z-index:2; right:16px; bottom:18px; max-width:64%;
+  font-family:var(--display); font-style:italic; font-size:13.5px; line-height:1.4;
+  color:rgba(255,255,255,.94); text-align:right; text-shadow:0 2px 10px rgba(0,0,0,.6);
+}
+.team-points{display:grid; margin-top:34px}
+.team-point{display:flex; gap:17px; align-items:flex-start; padding:20px 0; border-top:1px solid var(--rule)}
+.team-point:last-child{border-bottom:1px solid var(--rule)}
+.team-point b{display:block; font-family:var(--display); font-weight:500; font-size:17px; margin-bottom:4px}
+.team-point p{font-size:14px; color:var(--ink-faint); line-height:1.6}
+
+/* ============================== diferenciais ============================== */
+.why{display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:80px; align-items:start}
+.pull{
+  font-family:var(--display); font-weight:400; font-size:clamp(26px,3.4vw,40px);
+  line-height:1.22; letter-spacing:-.02em; color:var(--ink); margin-top:24px;
+}
+.pull .q{display:block; font-size:56px; line-height:.4; color:var(--gold); margin-bottom:22px}
+.why-list{display:grid}
+.why-item{display:flex; gap:20px; align-items:flex-start; padding:24px 0; border-top:1px solid var(--rule)}
+.why-item:last-child{border-bottom:1px solid var(--rule)}
+.why-item .n{
+  font-family:var(--display); font-style:italic; font-size:14px; color:var(--gold);
+  flex:none; width:24px; padding-top:4px;
+}
+.why-item h3{font-size:17.5px; margin-bottom:5px}
+.why-item p{font-size:14px; color:var(--ink-faint); line-height:1.6}
+
+/* ============================== agendamento ============================== */
+.steps{display:grid; grid-template-columns:repeat(3,1fr); gap:52px}
+.step{position:relative}
+/* o numeral fica acima do seu próprio fio — antes ele estava sobreposto ao
+   border-top do bloco e a linha passava por cima dos algarismos */
+.step .n{
+  display:block; padding-bottom:18px; margin-bottom:24px;
+  border-bottom:1px solid var(--rule);
+  font-family:var(--display); font-weight:400; font-size:46px; line-height:1;
+  color:var(--gold); letter-spacing:-.03em;
+}
+.step h3{font-size:21px; margin-bottom:11px}
+.step p{font-size:14.5px; color:var(--ink-faint); line-height:1.66}
+
+/* ============================== instagram ============================== */
+.ig{
+  position:relative; overflow:hidden; border-radius:var(--r-xl);
+  background:linear-gradient(150deg,#0B2A52,#08203F); color:#EDF4FB;
+  padding:60px 64px; display:flex; flex-wrap:wrap; align-items:center;
+  justify-content:space-between; gap:36px;
+}
+.ig::before{
+  content:""; position:absolute; right:-90px; bottom:-120px; width:360px; height:360px;
+  background:radial-gradient(circle,rgba(188,148,61,.24),transparent 66%); border-radius:50%;
+}
+.ig .selo-ghost{
+  position:absolute; right:44px; top:50%; transform:translateY(-50%);
+  width:190px; height:190px; opacity:.10; pointer-events:none;
+}
+.ig-copy{position:relative; max-width:50ch}
+.ig-copy h2{color:#fff}
+.ig-copy p{margin-top:16px; color:rgba(237,244,251,.76); font-size:16px}
+.btn-ig{position:relative; background:var(--grad-gold); color:#2A2008; box-shadow:var(--sh-gold)}
+.btn-ig:hover{transform:translateY(-2px); color:#2A2008; box-shadow:0 18px 40px -12px rgba(188,148,61,.55)}
+
+/* ============================== CTA final ============================== */
+.cta{position:relative; background:var(--grad-navy); color:#EDF4FB; padding:126px 0; text-align:center}
+.cta::before{
+  content:""; position:absolute; inset:0; pointer-events:none;
+  background:
+    radial-gradient(560px 400px at 16% 6%, rgba(48,227,229,.18), transparent 64%),
+    radial-gradient(620px 440px at 86% 94%, rgba(188,148,61,.18), transparent 62%);
+}
+.cta-inner{position:relative; z-index:2; max-width:760px; margin:0 auto}
+.cta .label{justify-content:center}
+.cta h2{color:#fff}
+.cta p{margin-top:24px; color:rgba(237,244,251,.80); font-size:17.5px}
+.cta-actions{display:flex; flex-wrap:wrap; gap:15px; justify-content:center; margin-top:42px}
+.cta-note{margin-top:30px; font-size:12.5px; color:rgba(237,244,251,.48)}
+.cta .deco .selo-ghost{
+  position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
+  width:520px; height:520px; opacity:.05;
+}
+
+/* ============================== footer ============================== */
+.site-footer{background:var(--paper-2); padding:78px 0 0; position:relative; z-index:1}
+.site-footer::before{content:""; position:absolute; left:0; right:0; top:0; height:1px; background:var(--hair-gold)}
+.foot-grid{display:grid; grid-template-columns:minmax(0,1.5fr) repeat(3,minmax(0,1fr)); gap:48px}
+/* lockup do rodapé: alturas fixas e largura automática — sem esticar */
+.foot-brand .brand{margin-right:0; margin-bottom:20px}
+.foot-brand .brand .selo{width:54px; height:54px}
+.foot-brand .brand .lettering{height:27px}
+.foot-brand p{font-size:14px; color:var(--ink-faint); max-width:36ch; line-height:1.72}
+.foot-social{display:flex; gap:11px; margin-top:24px}
+.foot-social a{
+  width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  background:var(--surface); color:var(--ink-soft);
+  box-shadow:inset 0 0 0 1px rgba(188,148,61,.28);
+  transition:transform var(--t-fast), color var(--t-fast), box-shadow var(--t-fast);
+}
+.foot-social a:hover{transform:translateY(-2px); color:var(--brand); box-shadow:inset 0 0 0 1px var(--brand)}
+.foot-social svg{width:18px; height:18px; display:block}
+.foot-col h4{
+  font-family:var(--body); font-size:10.5px; font-weight:700; letter-spacing:.22em;
+  text-transform:uppercase; color:var(--gold); margin-bottom:18px;
+}
+.foot-col li + li{margin-top:11px}
+.foot-col a,.foot-col span{font-size:14px; color:var(--ink-faint); line-height:1.65}
+.foot-col a:hover{color:var(--brand)}
+.foot-col address{font-style:normal; font-size:14px; color:var(--ink-faint); line-height:1.72}
+.foot-bar{
+  margin-top:60px; padding:26px 0; border-top:1px solid var(--rule);
+  display:flex; flex-wrap:wrap; gap:14px 26px; align-items:center; justify-content:space-between;
+}
+.foot-bar p{font-size:12.5px; color:var(--ink-faint)}
+.credit{display:inline-flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:12.5px; color:var(--ink-faint)}
+.credit a{font-weight:600; color:var(--ink-soft)}
+.credit a:hover{color:var(--brand)}
+.credit .sep{width:1px; height:12px; background:var(--rule)}
+.credit .ig-handle{display:inline-flex; align-items:center; gap:6px}
+.credit .ig-handle svg{width:14px; height:14px; display:block}
+
+/* ============================== WhatsApp flutuante ============================== */
+/* o <details> é quem fica fixo; o botão redondo é o <summary> dentro dele, para
+   que o menu possa se posicionar em relação ao conjunto */
+.wa-dock{position:fixed; right:24px; bottom:24px; z-index:60; display:block}
+.wa-float{
+  position:relative;
+  width:58px; height:58px; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(135deg,var(--wa-deep),var(--wa)); color:#fff;
+  box-shadow:0 14px 32px -10px rgba(37,211,102,.58);
+  transition:transform var(--t) var(--ease), box-shadow var(--t) var(--ease);
+}
+.wa-float svg{width:28px; height:28px; display:block}
+.wa-float::after{
+  content:""; position:absolute; inset:0; border-radius:50%;
+  border:2px solid rgba(37,211,102,.45); animation:ring 2.8s ease-out infinite;
+}
+@keyframes ring{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.65);opacity:0}}
+.wa-float:hover{transform:scale(1.07); color:#fff}
+
+/* ============================== responsivo ============================== */
+@media (max-width:1040px){
+  .hero-grid{grid-template-columns:1fr; gap:64px}
+  .hero{padding:88px 0 104px}
+  .portrait-wrap{width:min(100%,340px)}
+  .vlabel{display:none}
+  .float-note{right:-10px; top:32px}
+  .team{grid-template-columns:1fr; gap:64px}
+  .team-media{width:min(100%,400px)}
+  .why{grid-template-columns:1fr; gap:44px}
+  .services{grid-template-columns:repeat(4,1fr)}
+  .svc.feat{grid-column:span 4}
+  .svc.wide{grid-column:span 2}
+  .figures-inner{grid-template-columns:repeat(2,1fr); gap:38px 24px; padding:38px 0}
+  .fig:nth-child(3)::before,.fig:nth-child(odd)::before{display:none}
+  .steps{grid-template-columns:1fr; gap:42px}
+  .foot-grid{grid-template-columns:1fr 1fr; gap:40px}
+  .ig{padding:44px 36px}
+  .ig .selo-ghost{display:none}
+}
+@media (max-width:720px){
+  .section{padding:82px 0}
+  .wrap{padding:0 20px}
+  .head-inner{padding:0 20px}
+  .nav{
+    position:absolute; top:var(--head-h); left:0; right:0; display:none;
+    flex-direction:column; align-items:stretch; gap:0; padding:8px 20px 22px;
+    background:rgba(251,250,247,.98); backdrop-filter:blur(18px);
+    box-shadow:0 22px 44px -22px rgba(11,31,63,.34);
+  }
+  .nav.open{display:flex}
+  .nav > a:not(.btn){padding:15px 2px; font-size:16px; border-bottom:1px solid var(--rule)}
+  .nav > a:not(.btn)::after{display:none}
+  .nav .btn{margin-top:18px}
+  /* no menu mobile o <details> ocupa a largura toda; sem isto o botão ficava
+     encolhido à esquerda e a seta do popover apontava para o vazio */
+  .nav .picker{display:block; margin-top:18px}
+  .nav .picker > summary{width:100%; margin-top:0}
+  .nav .picker .picker-menu{left:0; right:0; min-width:0; transform:none}
+  .nav .picker .picker-menu::before{right:auto; left:50%; margin-left:-6px}
+  .nav-toggle{display:flex}
+  .brand .selo{width:38px; height:38px}
+  .brand .lettering{height:20px}
+  .services{grid-template-columns:1fr}
+  .svc,.svc.feat,.svc.wide{grid-column:span 1}
+  .svc.feat{padding:30px 26px}
+  .svc.feat h3{font-size:23px}
+  .float-note{display:none}
+  .portrait-wrap{width:min(100%,320px); margin:14px 0}
+  .portrait{outline-offset:12px}
+  .team-media{margin:14px 0}
+  .team-media .shot{outline-offset:13px}
+  .team-media .selo{width:88px; height:88px; bottom:-18px; left:-14px}
+  .figures-inner{grid-template-columns:1fr; gap:30px; padding:34px 0}
+  .fig::before{display:none !important}
+  .fig + .fig{border-top:1px solid rgba(232,206,134,.20); padding-top:28px}
+  .foot-grid{grid-template-columns:1fr; gap:36px}
+  .cta{padding:92px 0}
+  .cta .selo-ghost{width:340px; height:340px}
+  .pull{font-size:26px}
+  .pull .q{font-size:44px}
+}
+@media (max-width:420px){
+  .hero-cta .btn,.cta-actions .btn{width:100%}
+  .hero-marks{gap:14px 20px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important; animation-iteration-count:1 !important;
+    transition-duration:.01ms !important; scroll-behavior:auto !important}
+  .reveal{opacity:1; transform:none}
+}
