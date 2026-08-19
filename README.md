@@ -4,6 +4,8 @@ Página institucional da Odonto Vip, reconstruída a partir do conteúdo da
 landing anterior (`odontovip.base44.app`) com a linguagem visual do design
 system CINCO.
 
+No ar: <https://nicolas747ar.github.io/odontovip/>
+
 ## Como abrir
 
 Arquivo único, sem build e sem dependências:
@@ -25,15 +27,16 @@ e abrir <http://localhost:4321>.
     assets/js/main.js                   reveal on scroll, menu mobile, seção ativa
     assets/img/odontovip-selo.png       selo circular dourado (transparente)
     assets/img/odontovip-lettering.png  lettering ODONTO VIP (transparente)
-    assets/img/odontovip-logo.png       logo horizontal, usado só em og:image
     assets/img/dra-marcelly.jpg         retrato do hero
     assets/img/equipe-cirurgia.jpg      foto da seção "Equipe e estrutura"
-    Img/                                originais enviados, sem tratamento
+    assets/img/og-odontovip.jpg         prévia de link (1200x630)
+    robots.txt / sitemap.xml            indexação
+    Img/                                originais e o logo horizontal, fora do site
 
 Seções, na ordem: hero · números · 01 unidades · 02 serviços · 03 equipe e
 estrutura · 04 diferenciais · 05 agendamento · Instagram · CTA final · rodapé.
 
-Site inteiro (HTML + CSS + JS + imagens): **592 KB**.
+Site inteiro (HTML + CSS + JS + imagens): **552 KB**.
 
 ## Direção de arte
 
@@ -150,14 +153,20 @@ novo em algum ancestral.
    houver uma foto própria.
 4. **Endereço e data de abertura da unidade Boa Viagem**, para completar o card
    e ativar o WhatsApp e o mapa dela.
-5. **Domínio.** `canonical` e `og:url` estão em `https://odontovip.com.br/` —
-   ajustar para o domínio real antes de publicar.
+5. **Domínio próprio.** Hoje `canonical`, `og:url`, `robots.txt` e `sitemap.xml`
+   apontam para `nicolas747ar.github.io/odontovip`. Se a clínica registrar um
+   domínio (`odontovip.com.br`, por exemplo), é trocar essas quatro referências
+   e configurar o CNAME no GitHub Pages.
 
 ## Publicação
 
-Site estático: sobem `index.html` e `assets/`. Funciona em qualquer hospedagem
-(Netlify, Vercel, Cloudflare Pages, GitHub Pages ou hospedagem comum via FTP).
-Não há backend — os agendamentos vão direto para o WhatsApp.
+Publicado por GitHub Pages a partir da branch `main`, raiz do repositório. Cada
+push para `main` republica em cerca de um minuto.
 
-Antes de publicar: revisar o item 5 acima e gerar um favicon `.ico`/`.png` em
-32px e 180px a partir de `assets/img/odontovip-selo.png`.
+Site estático, sem backend: os agendamentos vão direto para o WhatsApp. Roda
+igual em qualquer hospedagem (Netlify, Vercel, Cloudflare Pages ou FTP comum),
+bastando subir tudo menos `Img/` e `odontovip-completo.html`.
+
+Indexação: `robots.txt` libera tudo e aponta o `sitemap.xml`. A prévia de link
+em WhatsApp e redes usa `assets/img/og-odontovip.jpg` (1200x630), gerada a
+partir do selo e do lettering da marca.

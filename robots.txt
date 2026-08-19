@@ -1,4 +1,4 @@
-# Proposta em avaliação, não o site oficial.
-# Remover este arquivo (e a meta robots do index.html) quando entrar no ar.
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://nicolas747ar.github.io/odontovip/sitemap.xml
