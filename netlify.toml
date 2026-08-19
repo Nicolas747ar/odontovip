@@ -1,0 +1,45 @@
+# Netlify serve TUDO o que estiver na pasta publicada. Se publicássemos a raiz do
+# repositório, o README com as notas internas, os originais em Img/ e o
+# odontovip-completo.html ficariam baixáveis por qualquer um — o que anularia o
+# motivo de o repositório ser privado. Por isso o build monta um dist/ só com o
+# site, e é esse dist/ que vai ao ar.
+#
+# O build também reescreve a URL absoluta: canonical, og:url, og:image,
+# JSON-LD, robots.txt e sitemap.xml passam a apontar para $URL, que é o domínio
+# primário do site. Assim ficam certos no subdomínio da Netlify agora e no
+# domínio próprio da clínica depois, sem editar nada à mão.
+
+[build]
+  publish = "dist"
+  command = """
+    set -e
+    rm -rf dist && mkdir -p dist
+    cp -r index.html robots.txt sitemap.xml assets dist/
+    BASE="${URL%/}/"
+    echo "Reescrevendo URL absoluta para $BASE"
+    grep -rl 'https://nicolas747ar.github.io/odontovip/' dist \
+      --include='*.html' --include='*.xml' --include='*.txt' \
+      | xargs -r sed -i "s|https://nicolas747ar\\.github\\.io/odontovip/|$BASE|g"
+  """
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/assets/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/assets/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
+
+[[headers]]
+  for = "/assets/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"

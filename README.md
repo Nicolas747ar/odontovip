@@ -4,7 +4,18 @@ Página institucional da Odonto Vip, reconstruída a partir do conteúdo da
 landing anterior (`odontovip.base44.app`) com a linguagem visual do design
 system CINCO.
 
-No ar: <https://nicolas747ar.github.io/odontovip/>
+Repositório privado; o site é público. Publicado pela Netlify a partir da
+branch `main`.
+
+O `netlify.toml` existe por um motivo específico: a Netlify serve tudo o que
+está na pasta publicada, então publicar a raiz deixaria este README, os
+originais em `Img/` e o `odontovip-completo.html` baixáveis por qualquer um — o
+que anularia o repositório ser privado. O build monta um `dist/` só com o site.
+
+O mesmo build reescreve a URL absoluta (`canonical`, `og:url`, `og:image`,
+JSON-LD, `robots.txt`, `sitemap.xml`) para `$URL`, o domínio primário do site.
+Ou seja: quando a clínica apontar `odontovip.com.br`, essas referências se
+corrigem sozinhas — não há nada para editar à mão.
 
 ## Como abrir
 
@@ -153,19 +164,18 @@ novo em algum ancestral.
    houver uma foto própria.
 4. **Endereço e data de abertura da unidade Boa Viagem**, para completar o card
    e ativar o WhatsApp e o mapa dela.
-5. **Domínio próprio.** Hoje `canonical`, `og:url`, `robots.txt` e `sitemap.xml`
-   apontam para `nicolas747ar.github.io/odontovip`. Se a clínica registrar um
-   domínio (`odontovip.com.br`, por exemplo), é trocar essas quatro referências
-   e configurar o CNAME no GitHub Pages.
+5. **Domínio próprio.** Quando a clínica registrar `odontovip.com.br`, basta
+   adicioná-lo como domínio primário na Netlify. As URLs absolutas se ajustam
+   no build; não há referência para editar.
 
 ## Publicação
 
-Publicado por GitHub Pages a partir da branch `main`, raiz do repositório. Cada
-push para `main` republica em cerca de um minuto.
+Netlify, conectada a este repositório privado. Cada push para `main` dispara o
+build e republica. O que vai ao ar são os 10 arquivos de `dist/` (492 KB):
+`index.html`, `robots.txt`, `sitemap.xml` e `assets/`.
 
 Site estático, sem backend: os agendamentos vão direto para o WhatsApp. Roda
-igual em qualquer hospedagem (Netlify, Vercel, Cloudflare Pages ou FTP comum),
-bastando subir tudo menos `Img/` e `odontovip-completo.html`.
+igual em qualquer hospedagem; fora da Netlify, publique só esses arquivos.
 
 Indexação: `robots.txt` libera tudo e aponta o `sitemap.xml`. A prévia de link
 em WhatsApp e redes usa `assets/img/og-odontovip.jpg` (1200x630), gerada a
